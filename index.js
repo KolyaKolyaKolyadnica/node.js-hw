@@ -3,6 +3,7 @@ const {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 } = require("./contacts");
 
 const { Command } = require("commander");
@@ -21,23 +22,48 @@ const argv = program.opts();
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      const contacts = await listContacts();
-      console.table(contacts);
+      try {
+        const contacts = await listContacts();
+        console.table(contacts);
+      } catch (error) {
+        console.error(error.message);
+      }
       break;
 
     case "get":
-      const contactById = await getContactById(id);
-      console.table(contactById);
+      try {
+        const contactById = await getContactById(id);
+        console.table(contactById);
+      } catch (error) {
+        console.error(error.message);
+      }
       break;
 
     case "add":
-      const contactAdded = await addContact(name, email, phone);
-      console.table(contactAdded);
+      try {
+        const contactAdded = await addContact(name, email, phone);
+        console.table(contactAdded);
+      } catch (error) {
+        console.error(error.message);
+      }
       break;
 
     case "remove":
-      const contactRemoved = await removeContact(id);
-      console.table(contactRemoved);
+      try {
+        const contactRemoved = await removeContact(id);
+        console.table(contactRemoved);
+      } catch (error) {
+        console.error(error.message);
+      }
+      break;
+
+    case "update":
+      try {
+        const contactUpdated = await updateContact(id, name, email, phone);
+        console.table(contactUpdated);
+      } catch (error) {
+        console.error(error.message);
+      }
       break;
 
     default:
